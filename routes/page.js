@@ -1,6 +1,6 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
-const { Post, User } = require("../models");
+const { Post, User, Hashtag } = require("../models");
 
 const router = express.Router();
 
@@ -50,7 +50,7 @@ router.get("/hashtag", async (req, res, next) => {
     const hashtag = await Hashtag.findOne({ where: { title: query } });
     let posts = [];
     if (hashtag) {
-      posts = await hashtag.getPosts({ include: [{ model: User }] });
+      posts = await Hashtag.getPosts({ include: [{ model: User }] });
     }
 
     return res.render("main", {
